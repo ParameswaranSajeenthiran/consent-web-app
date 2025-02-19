@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.wso2</groupId>
   <artifactId>consent-docker</artifactId>
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>consent-docker Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -151,4 +151,12 @@
   <build>
     <finalName>consent</finalName>
   </build>
+    <modules>
+      <module>components/org.wso2.financial.services.accelerator.common</module>
+      <module>components/org.wso2.financial.services.accelerator.consent.mgt.dao</module>
+      <module>components/org.wso2.financial.services.accelerator.consent.mgt.service</module>
+      <module>components/org.wso2.financial.services.accelerator.consent.mgt.extensions</module>
+
+
+    </modules>
 </project>
