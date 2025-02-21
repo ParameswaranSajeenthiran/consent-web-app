@@ -27,6 +27,11 @@ ENV CONTEXT_URL="https://your-storage-bucket/context.xml"
 
 # RUN cp -r $CATALINA_HOME/webapps.dist/* $CATALINA_HOME/webapps
 COPY --from=builder /app/target/*.war /usr/local/tomcat/webapps/consent.war
+RUN mkdir /usr/local/tomcat/webapps/consent && \
+    cd /usr/local/tomcat/webapps/consent && \
+    jar -xf /usr/local/tomcat/webapps/consent.war && \
+    rm /usr/local/tomcat/webapps/consent.war
+
 EXPOSE 8080
 # RUN adduser \
 #   --disabled-password \
@@ -37,5 +42,5 @@ EXPOSE 8080
 #   --uid 10014 \
 #   "choreo"
 # Use the above created unprivileged user
-USER 10014
+# USER 10014
 CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
