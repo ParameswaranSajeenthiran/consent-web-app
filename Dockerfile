@@ -23,9 +23,25 @@ RUN mvn clean package -DskipTests
 
 USER 10014
 FROM tomcat:9.0-jdk11
-ENV CONTEXT_URL="https://your-storage-bucket/context.xml"
 
-RUN cp -r $CATALINA_HOME/webapps.dist/* $CATALINA_HOME/webapps
-COPY --from=builder /app/target/*.war /usr/local/tomcat/webapps/consent.war
+# RUN cp -r $CATALINA_HOME/webapps.dist/* $CATALINA_HOME/webapps
+COPY --from=builder /app/target/*.war /usr/local/tomcat/consent.war
+# Copy the startup script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+
+
+
 EXPOSE 8080
-CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
+# RUN adduser \
+#   --disabled-password \
+#   --gecos "" \
+#   --home "/nonexistent" \
+#   --shell "/sbin/nologin" \
+#   --no-create-home \
+#   --uid 10014 \
+#   "choreo"
+# Use the above created unprivileged user
+USER 10014
+ENTRYPOINT ["/entrypoint.sh"]
