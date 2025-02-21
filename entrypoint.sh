@@ -5,9 +5,9 @@ set -e
 mkdir -p /usr/local/tomcat/webapps
 
 # Copy the WAR file if it doesn't already exist
-if [ ! -f "/usr/local/tomcat/webapps/ROOT.war" ]; then
+if [ ! -f "/usr/local/tomcat/webapps/consent.war" ]; then
     echo "Deploying ROOT.war..."
-    cp /usr/local/tomcat/ROOT.war /usr/local/tomcat/webapps/ROOT.war
+    cp /usr/local/tomcat/consent.war /usr/local/tomcat/webapps/consent.war
 fi
 
 # Start Tomcat

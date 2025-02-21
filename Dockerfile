@@ -23,11 +23,12 @@ RUN mvn clean package -DskipTests
 
 USER 10014
 FROM tomcat:9.0-jdk11
-ENV CONTEXT_URL="https://your-storage-bucket/context.xml"
 
 # RUN cp -r $CATALINA_HOME/webapps.dist/* $CATALINA_HOME/webapps
-# COPY --from=builder /app/target/*.war /usr/local/tomcat/webapps/consent.war
-
+COPY --from=builder /app/target/*.war /usr/local/tomcat/consent.war
+# Copy the startup script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 
 
@@ -43,4 +44,4 @@ EXPOSE 8080
 #   "choreo"
 # Use the above created unprivileged user
 USER 10014
-CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
+ENTRYPOINT ["/entrypoint.sh"]
