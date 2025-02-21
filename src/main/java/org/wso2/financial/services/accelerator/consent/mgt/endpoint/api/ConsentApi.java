@@ -14,6 +14,15 @@ import org.apache.commons.logging.LogFactory;
 //import org.wso2.financial.services.accelerator.consent.mgt.extensions.manage.model.ConsentManageData;
 //import org.wso2.financial.services.accelerator.consent.mgt.service.impl.ConsentCoreServiceImpl;
 
+import org.json.JSONObject;
+import org.wso2.financial.services.accelerator.common.exception.ConsentManagementException;
+import org.wso2.financial.services.accelerator.consent.mgt.dao.models.ConsentResource;
+import org.wso2.financial.services.accelerator.consent.mgt.dao.models.DetailedConsentResource;
+import org.wso2.financial.services.accelerator.consent.mgt.endpoint.api.dto.ConsentMgtDTO;
+import org.wso2.financial.services.accelerator.consent.mgt.endpoint.api.handler.ConsentMgtApiHandler;
+import org.wso2.financial.services.accelerator.consent.mgt.endpoint.api.utils.ConsentUtils;
+import org.wso2.financial.services.accelerator.consent.mgt.service.impl.ConsentCoreServiceImpl;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -25,6 +34,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.util.Objects;
 
 /**
  * ConsentSearchEndpoint.
@@ -45,7 +55,7 @@ public class ConsentApi {
     private static final Log log = LogFactory.getLog(ConsentApi.class);
 
     public ConsentApi() {
-
+        ConsentCoreServiceImpl consentCoreService = new ConsentCoreServiceImpl();
 
     }
 
@@ -61,17 +71,84 @@ public class ConsentApi {
                            @Context UriInfo uriInfo) {
 
         try {
+            ConsentCoreServiceImpl consentCoreService = new ConsentCoreServiceImpl();
+//            consentCoreService.
+
 
             return Response.ok(request.getPathInfo()).build();
 
         } catch (Exception e) {
-            log.error("Error occurred while searching consent data", e);
+//            log.error("Error occurred while searching consent data", e);
             return Response.ok(e).build();
         }
 
 
     }
 
+
+
+        /**
+     * ConsentCreateEndpoint.
+     */
+    @GET
+    @Path("/create")
+    @Produces({"application/json; charset=utf-8"})
+    public Response createConsent(@Context HttpServletRequest request, @Context HttpServletResponse response,
+                                  @Context UriInfo uriInfo) {
+
+        try {
+            ConsentCoreServiceImpl consentCoreService = new ConsentCoreServiceImpl();
+//             ConsentMgtDTO = new ConsentMgtDTO(ConsentUtils.getHeaders(request),
+//                    ConsentUtils.getPayload(request), uriInfo.getQueryParameters(),
+//                    uriInfo.getPathParameters().getFirst("s"), request, response);
+            ConsentResource consentResource = new ConsentResource("5", "sdfs",
+                    new JSONObject(Objects.requireNonNull(ConsentUtils.getPayload(request)).toString()).toString(),
+                    "sdfs", 2, 232, false, "test",
+                    453, 34345);
+
+
+            DetailedConsentResource detailedConsentResource =consentCoreService.createAuthorizableConsent(consentResource, "sdf", "", "sdf",
+                    false);
+            log.info("Consent created successfully with id: " + detailedConsentResource.getConsentID());
+
+        } catch (ConsentManagementException e) {
+            log.error("Error occurred while creating consent data", e);
+            return Response.ok(e.toString()).build();
+        } catch (Exception e){
+            return Response.ok(e.toString()).build();
+        }
+
+
+        return Response.ok(request.getPathInfo()).build();
+    }
+
+
+//    /**
+//     * ConsentCreateEndpoint.
+//     */
+//    @GET
+//    @Path("/search")
+//    @Consumes({"application/x-www-form-urlencoded"})
+//    @Produces({"application/json; charset=utf-8"})
+//    public Response search(@Context HttpServletRequest request, @Context HttpServletResponse response,
+//                           @Context UriInfo uriInfo) {
+//
+//        try {
+//
+//            ConsentMgtApiHandler consentMgtApiHandler = new ConsentMgtApiHandler();
+//            ConsentMgtDTO consentMgtDTO = new ConsentMgtDTO(ConsentUtils.getHeaders(request).get("client_id"),
+//                    ConsentUtils.getHeaders(request),
+//                    ConsentUtils.getPayload(request), uriInfo.getQueryParameters(),
+//                    uriInfo.getPathParameters().getFirst("s"), uriInfo.getAbsolutePath().getPath(), request,
+//                    response);
+//            consentMgtApiHandler.handleSearch(consentMgtDTO);
+//            return sendResponse(consentMgtDTO);
+//
+//        } catch (Exception e) {
+//            log.error("Error occurred while searching consent data", e);
+//            return Response.ok(e).build();
+//        }
+//
 
 //
 //    /**
@@ -135,33 +212,33 @@ public class ConsentApi {
 //        return Response.ok(request.getPathInfo()).build();
 //    }
 //
-//    /**
-//     * get Consent by Id
-//     **/
-//    @GET
-//    @Path("/{id}")
-//    @Produces({"application/json; charset=utf-8"})
-//    public Response getConsent(@Context HttpServletRequest request, @Context HttpServletResponse response,
-//                               @Context UriInfo uriInfo) {
-//
-//        try {
-//            ConsentMgtApiHandler consentMgtApiHandler = new ConsentMgtApiHandler();
-//            ConsentMgtDTO consentMgtDTO = new ConsentMgtDTO(ConsentUtils.getHeaders(request).get("client_id"),
-//                    ConsentUtils.getHeaders(request),
-//                    ConsentUtils.getPayload(request), uriInfo.getQueryParameters(),
-//                    uriInfo.getPathParameters().getFirst("id"), uriInfo.getAbsolutePath().getPath(), request,
-//                    response);
-////            consentMgtDTO.setClientId(consentMgtDTO.getHeaders().get("client_id"));
-//
-//            consentMgtApiHandler.handleGetConsent(consentMgtDTO);
-//            return sendResponse(consentMgtDTO);
-//
-//        } catch (Exception e) {
-//            log.error("Error occurred while getting consent data", e);
-//            return Response.ok(e).build();
-//        }
-//    }
-//
+    /**
+     * get Consent by Id
+     **/
+    @GET
+    @Path("/{id}")
+    @Produces({"application/json; charset=utf-8"})
+    public Response getConsent(@Context HttpServletRequest request, @Context HttpServletResponse response,
+                               @Context UriInfo uriInfo) {
+
+        try {
+            ConsentMgtApiHandler consentMgtApiHandler = new ConsentMgtApiHandler();
+            ConsentMgtDTO consentMgtDTO = new ConsentMgtDTO(ConsentUtils.getHeaders(request).get("client_id"),
+                    ConsentUtils.getHeaders(request),
+                    ConsentUtils.getPayload(request), uriInfo.getQueryParameters(),
+                    uriInfo.getPathParameters().getFirst("id"), uriInfo.getAbsolutePath().getPath(), request,
+                    response);
+//            consentMgtDTO.setClientId(consentMgtDTO.getHeaders().get("client_id"));
+
+            consentMgtApiHandler.handleGetConsent(consentMgtDTO);
+            return Response.ok().build();
+
+        } catch (Exception e) {
+            log.error("Error occurred while getting consent data", e);
+            return Response.ok(e).build();
+        }
+    }
+
 //    /**
 //     * DELETE Consent by Id
 //     */

@@ -1,0 +1,19 @@
+<!--<Context>-->
+
+<!--    <Resource name="jdbc/WSO2FS_DB" auth="Container" type="javax.sql.DataSource"-->
+<!--              maxActive="50" maxIdle="30" maxWait="10000"-->
+<!--              username="root" password="password"-->
+<!--              driverClassName="com.mysql.cj.jdbc.Driver"-->
+<!--              url="jdbc:mysql://localhost:3306/fs_consentdb?useSSL=false"/>-->
+
+<!--</Context>-->
+
+<Context>
+
+    <Resource name="jdbc/WSO2FS_DB" auth="Container" type="javax.sql.DataSource"
+              maxActive="50" maxIdle="30" maxWait="10000"
+              username="avnadmin" password="AVNS_22LuQQLMfcnAYaEAuJT"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://mysql-b4f7579c-5838-43f1-9425-18223efaa65c-fsconse2799292102-ch.e.aivencloud.com:14605/fs_consentdb?allowPublicKeyRetrieval=true&amp;useSSL=false"/>
+
+</Context>
