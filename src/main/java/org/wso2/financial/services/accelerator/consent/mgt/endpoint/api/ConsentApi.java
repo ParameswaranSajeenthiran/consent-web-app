@@ -35,6 +35,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * ConsentSearchEndpoint.
@@ -101,7 +102,7 @@ public class ConsentApi {
 //             ConsentMgtDTO = new ConsentMgtDTO(ConsentUtils.getHeaders(request),
 //                    ConsentUtils.getPayload(request), uriInfo.getQueryParameters(),
 //                    uriInfo.getPathParameters().getFirst("s"), request, response);
-            ConsentResource consentResource = new ConsentResource("5", "sdfs",
+            ConsentResource consentResource = new ConsentResource((String.valueOf(Math.random())), "sdfs",
                     new JSONObject(Objects.requireNonNull(ConsentUtils.getPayload(request)).toString()).toString(),
                     "sdfs", 2, 232, false, "test",
                     453, 34345);
