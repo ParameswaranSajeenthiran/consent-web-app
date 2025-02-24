@@ -18,7 +18,6 @@ package org.wso2.financial.services.accelerator.consent.mgt.endpoint.api.handler
 //import java.util.ArrayList;
 //import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
@@ -34,10 +33,12 @@ import org.wso2.financial.services.accelerator.consent.mgt.service.impl.ConsentC
  */
 public class ConsentMgtApiHandler {
     private static final Log log = LogFactory.getLog(ConsentMgtApiHandler.class);
-//
+
+    //
     public ConsentMgtApiHandler() {
     }
-//
+
+    //
 //
 //    public void handleSearch(ConsentMgtDTO consentAdminData) throws ConsentException {
 //        JSONObject response = new JSONObject();
@@ -133,35 +134,35 @@ public class ConsentMgtApiHandler {
 //    }
 //
 //
-    public void handleGetConsent(ConsentMgtDTO consentMgtDTO) throws  ConsentManagementException {
-      if (consentMgtDTO.getRequestPath() == null) {
+    public void handleGetConsent(ConsentMgtDTO consentMgtDTO) throws ConsentManagementException {
+        if (consentMgtDTO.getRequestPath() == null) {
             log.error("Resource Path Not Found");
             throw new ConsentManagementException("Resource Path Not Found");
         } else {
             String consentId = consentMgtDTO.getRequestPath();
 //            if (ConsentExtensionUtils.isConsentIdValid(consentId)) {
-                try {
-                    ConsentCoreServiceImpl consentCoreService = new ConsentCoreServiceImpl();
-                    ConsentResource consent = consentCoreService.getConsent(consentId, false);
-                    if (consent == null) {
-                        log.error("Consent not found");
-                        throw new ConsentManagementException( "Consent not found");
-                    } else {
+            try {
+                ConsentCoreServiceImpl consentCoreService = new ConsentCoreServiceImpl();
+                ConsentResource consent = consentCoreService.getConsent(consentId, false);
+                if (consent == null) {
+                    log.error("Consent not found");
+                    throw new ConsentManagementException("Consent not found");
+                } else {
 
-                        JSONObject receiptJSON = new JSONObject(consent.getReceipt());
+                    JSONObject receiptJSON = new JSONObject(consent.getReceipt());
 //                        consentMgtDTO.setResponsePayload(ConsentExtensionUtils.getInitiationRetrievalResponse(
 //                                receiptJSON, consent));
-                        consentMgtDTO.setResponseStatus(ResponseStatus.OK);
+                    consentMgtDTO.setResponseStatus(ResponseStatus.OK);
 
-                    }
-                } catch (JSONException | ConsentManagementException e) {
-                    log.error("Error Occurred while handling the request", e);
-                    throw new ConsentManagementException("Error Occurred while" +
-                            " handling the request");
                 }
+            } catch (JSONException | ConsentManagementException e) {
+                log.error("Error Occurred while handling the request", e);
+                throw new ConsentManagementException("Error Occurred while" +
+                        " handling the request");
             }
-
         }
+
+    }
 
 
 //    public void handleDelete(ConsentMgtDTO consentManageData) throws ConsentException {

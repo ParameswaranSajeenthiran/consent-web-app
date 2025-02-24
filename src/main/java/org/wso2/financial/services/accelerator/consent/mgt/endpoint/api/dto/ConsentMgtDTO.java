@@ -3,34 +3,33 @@ package org.wso2.financial.services.accelerator.consent.mgt.endpoint.api.dto;
 
 import org.wso2.financial.services.accelerator.consent.mgt.endpoint.api.utils.ResponseStatus;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * Data wrapper for consent management data.
  */
 public class ConsentMgtDTO {
-    private String clientId;
     private Map<String, String> headers;
     private Object payload;
     private Map queryParams;
+    private Map pathParameters;
     private String requestPath;
-    private String absolutePath;
     private HttpServletRequest request;
     private HttpServletResponse response;
     private ResponseStatus responseStatus;
     private Object responsePayload;
 
-    public ConsentMgtDTO(String clientId, Map<String, String> headers, Object payload, Map queryParams,
-                         String requestPath, String absolutePath, HttpServletRequest request, HttpServletResponse
+    public ConsentMgtDTO(Map<String, String> headers, Object payload, Map queryParams,
+                         String requestPath, Map pathParameters, HttpServletRequest request, HttpServletResponse
                                  response) {
-        this.clientId = clientId;
         this.headers = headers;
         this.payload = payload;
         this.queryParams = queryParams;
+        this.pathParameters = pathParameters;
         this.requestPath = requestPath;
-        this.absolutePath = absolutePath;
         this.request = request;
         this.response = response;
     }
@@ -43,13 +42,12 @@ public class ConsentMgtDTO {
         this.requestPath = requestPath;
     }
 
-
-    public String getClientId() {
-        return clientId;
+    public Map getPathParameters() {
+        return pathParameters;
     }
 
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setPathParameters(Map pathParameters) {
+        this.pathParameters = pathParameters;
     }
 
     public Map<String, String> getHeaders() {
@@ -76,13 +74,6 @@ public class ConsentMgtDTO {
         this.queryParams = queryParams;
     }
 
-    public String getAbsolutePath() {
-        return absolutePath;
-    }
-
-    public void setAbsolutePath(String absolutePath) {
-        this.absolutePath = absolutePath;
-    }
 
     public HttpServletRequest getRequest() {
         return request;

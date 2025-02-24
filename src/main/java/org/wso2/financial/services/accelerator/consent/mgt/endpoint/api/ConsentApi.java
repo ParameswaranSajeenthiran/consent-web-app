@@ -1,24 +1,13 @@
 package org.wso2.financial.services.accelerator.consent.mgt.endpoint.api;
 
 //import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-//import org.json.JSONObject;
-//import org.wso2.financial.services.accelerator.common.exception.ConsentManagementException;
-//import org.wso2.financial.services.accelerator.consent.mgt.dao.models.ConsentResource;
-//import org.wso2.financial.services.accelerator.consent.mgt.endpoint.dto.ConsentMgtDTO;
-//import org.wso2.financial.services.accelerator.consent.mgt.endpoint.handler.ConsentMgtApiHandler;
-//import org.wso2.financial.services.accelerator.consent.mgt.endpoint.utils.ConsentUtils;
-//import org.wso2.financial.services.accelerator.consent.mgt.extensions.common.ConsentException;
-//import org.wso2.financial.services.accelerator.consent.mgt.extensions.common.ResponseStatus;
-//import org.wso2.financial.services.accelerator.consent.mgt.extensions.manage.model.ConsentManageData;
-//import org.wso2.financial.services.accelerator.consent.mgt.service.impl.ConsentCoreServiceImpl;
 
 import org.json.JSONObject;
-import org.wso2.financial.services.accelerator.common.exception.ConsentManagementException;
 import org.wso2.financial.services.accelerator.consent.mgt.dao.models.ConsentResource;
 import org.wso2.financial.services.accelerator.consent.mgt.dao.models.DetailedConsentResource;
-import org.wso2.financial.services.accelerator.consent.mgt.endpoint.api.dto.ConsentMgtDTO;
 import org.wso2.financial.services.accelerator.consent.mgt.endpoint.api.handler.ConsentMgtApiHandler;
 import org.wso2.financial.services.accelerator.consent.mgt.endpoint.api.utils.ConsentUtils;
 import org.wso2.financial.services.accelerator.consent.mgt.service.impl.ConsentCoreServiceImpl;
@@ -26,16 +15,13 @@ import org.wso2.financial.services.accelerator.consent.mgt.service.impl.ConsentC
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * ConsentSearchEndpoint.
@@ -61,7 +47,6 @@ public class ConsentApi {
     }
 
     /**
-     *
      * test
      */
     @GET
@@ -87,8 +72,7 @@ public class ConsentApi {
     }
 
 
-
-        /**
+    /**
      * ConsentCreateEndpoint.
      */
     @GET
@@ -99,23 +83,22 @@ public class ConsentApi {
 
         try {
             ConsentCoreServiceImpl consentCoreService = new ConsentCoreServiceImpl();
-//             ConsentMgtDTO = new ConsentMgtDTO(ConsentUtils.getHeaders(request),
+
+
+//             ConsentMgtDTO consentMgtDTO = new ConsentMgtDTO(ConsentUtils.getHeaders(request),
 //                    ConsentUtils.getPayload(request), uriInfo.getQueryParameters(),
-//                    uriInfo.getPathParameters().getFirst("s"), request, response);
+//                uriInfo.getPath(), uriInfo.getPathParameters(),  request, response);
             ConsentResource consentResource = new ConsentResource((String.valueOf(Math.random())), "sdfs",
                     new JSONObject(Objects.requireNonNull(ConsentUtils.getPayload(request)).toString()).toString(),
                     "sdfs", 2, 232, false, "test",
                     453, 34345);
 
 
-            DetailedConsentResource detailedConsentResource =consentCoreService.createAuthorizableConsent(consentResource, "sdf", "", "sdf",
+            DetailedConsentResource detailedConsentResource = consentCoreService.createAuthorizableConsent(consentResource, "sdf", "", "sdf",
                     false);
             log.info("Consent created successfully with id: " + detailedConsentResource.getConsentID());
 
-        } catch (ConsentManagementException e) {
-            log.error("Error occurred while creating consent data", e);
-            return Response.ok(e.toString()).build();
-        } catch (Exception e){
+        } catch (Exception e) {
             return Response.ok(e.toString()).build();
         }
 
@@ -213,6 +196,7 @@ public class ConsentApi {
 //        return Response.ok(request.getPathInfo()).build();
 //    }
 //
+
     /**
      * get Consent by Id
      **/
@@ -224,14 +208,13 @@ public class ConsentApi {
 
         try {
             ConsentMgtApiHandler consentMgtApiHandler = new ConsentMgtApiHandler();
-            ConsentMgtDTO consentMgtDTO = new ConsentMgtDTO(ConsentUtils.getHeaders(request).get("client_id"),
-                    ConsentUtils.getHeaders(request),
-                    ConsentUtils.getPayload(request), uriInfo.getQueryParameters(),
-                    uriInfo.getPathParameters().getFirst("id"), uriInfo.getAbsolutePath().getPath(), request,
-                    response);
-//            consentMgtDTO.setClientId(consentMgtDTO.getHeaders().get("client_id"));
+//            ConsentMgtDTO consentMgtDTO = new ConsentMgtDTO(ConsentUtils.getHeaders(request).get("client_id"),
+//                    ConsentUtils.getHeaders(request),
+//                    ConsentUtils.getPayload(request), uriInfo.getQueryParameters(),
+//                    uriInfo.getAbsolutePath().getPath(), uriInfo.getPathParameters(), request,
+//                    response);
 
-            consentMgtApiHandler.handleGetConsent(consentMgtDTO);
+//            consentMgtApiHandler.handleGetConsent(consentMgtDTO);
             return Response.ok().build();
 
         } catch (Exception e) {
